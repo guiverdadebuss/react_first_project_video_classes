@@ -19,13 +19,32 @@ function App() {
       isCompleted: false,
     },
     {
-      id: 1,
+      id: 3,
       title: "Estudar",
       description:
         "Estudar para me tornar um desenvolvedor full stack.",
       isCompleted: false,
     },
   ]);
+
+
+  function onTaskClick(taskId) {
+    const newTasks = tasks.map((task) => {
+      // PRECISO ATUALIZAR ESSA TAREFA
+      if (task.id === taskId) {
+        return { ...task, isCompleted: !task.isCompleted };
+      }
+
+      // NÃO PRECISO ATUALIZAR ESSA TAREFA
+      return task;
+    });
+    setTasks(newTasks);
+  }
+
+  function onDeleteTaskClick(taskId)  {
+    const newTasks = tasks.filter(task => task.id !== taskId)
+    setTasks(newTasks);
+  }
 
   return (
     <div className="w-screen h-screen bg-slate-500 flex justify-center p-6">
@@ -34,7 +53,11 @@ function App() {
           Gerenciador de Tarefas
         </h1>
         <AddTask />
-        <Tasks tasks={tasks}/>
+        <Tasks 
+        tasks={tasks} 
+        onTaskClick={onTaskClick}
+        onDeleteTaskClick={onDeleteTaskClick}
+        />
       </div>
     </div>
   );
